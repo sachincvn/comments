@@ -17,25 +17,25 @@ The project follows a clean and scalable architecture, ensuring separation of co
 
 ```plaintext
 lib/
+│
 ├── core/
-│   ├── constants/
-│   ├── utils/
-│   ├── errors/
-│   ├── usecases/
-├── data/
-│   ├── datasources/
-│   ├── models/
-│   ├── repositories/
-├── domain/
-│   ├── entities/
-│   ├── repositories/
-│   ├── usecases/
-├── presentation/
-│   ├── pages/
-│   ├── widgets/
-│   ├── providers/
-│   ├── routes/
-└── main.dart
+│   ├── di/                   # Dependency Injection setup
+│   ├── errors/               # Error handling classes
+│   ├── theme/                # App themes
+│   ├── utils/                # Utility classes and functions
+│
+├── features/
+│   ├── authentication/
+│   │   ├── domain/           # Business logic and use cases
+│   │   ├── presentation/     # UI and view models
+│   │   ├── data/             # Data models and repositories
+│   │
+│   ├── comments/
+│       ├── domain/           # Business logic and use cases
+│       ├── presentation/     # UI and view models
+│       ├── data/             # Data models and repositories
+│
+└── main.dart                 # Entry point of the application
 
 ```
 
