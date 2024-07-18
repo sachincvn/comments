@@ -13,6 +13,7 @@ import 'package:comments/features/comments/domain/usecase/get_comments_usecase.d
 import 'package:comments/features/comments/presentation/provider/comments_viewmodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:get_it/get_it.dart';
 
 final serviceLocator = GetIt.instance;
@@ -22,6 +23,11 @@ Future<void> initDependencies() async {
   serviceLocator.registerLazySingleton(() => FirebaseAuth.instance);
   serviceLocator.registerLazySingleton(() => FirebaseFirestore.instance);
 
+  final remoteConfig = FirebaseRemoteConfig.instance;
+  await remoteConfig.setDefaults({'mask_email': false});
+  await remoteConfig.fetchAndActivate();
+
+  serviceLocator.registerSingleton<FirebaseRemoteConfig>(remoteConfig);
   _registerDataSources();
   _registerRepositories();
   _registerUseCase();
@@ -30,8 +36,8 @@ Future<void> initDependencies() async {
 
 void _registerViewModels() {
   serviceLocator
-    ..registerFactory(() => CommentsViewModel(serviceLocator(),
-        getCommentsUseCase: serviceLocator()))
+    ..registerFactory(() =>
+        CommentsViewModel(serviceLocator(), serviceLocator(), serviceLocator()))
     ..registerFactory(
         () => RegisterViewModel(registerUserUseCase: serviceLocator()))
     ..registerFactory(() => LoginViewModel(loginUserUseCase: serviceLocator()));

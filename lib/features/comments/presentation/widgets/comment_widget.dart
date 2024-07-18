@@ -1,11 +1,14 @@
 import 'package:comments/core/theme/app_theme.dart';
+import 'package:comments/core/utils/string_utils.dart';
 import 'package:comments/features/comments/domain/entites/comment_entity.dart';
 import 'package:flutter/material.dart';
 
 class CommentWidget extends StatelessWidget {
   final CommentEntity comment;
+  final bool maskEmail;
 
-  const CommentWidget({super.key, required this.comment});
+  const CommentWidget(
+      {super.key, required this.comment, required this.maskEmail});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +58,9 @@ class CommentWidget extends StatelessWidget {
                       fontWeight: FontWeight.bold, color: AppTheme.grayColor),
                 ),
                 TextSpan(
-                  text: comment.email,
+                  text: maskEmail
+                      ? StringUtils.maskEmail(comment.email)
+                      : comment.email,
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       fontWeight: FontWeight.bold,
                       color: AppTheme.secondaryColor),

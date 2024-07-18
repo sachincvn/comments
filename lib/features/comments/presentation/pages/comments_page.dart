@@ -49,6 +49,7 @@ class _CommentsPageState extends State<CommentsPage> {
         ),
         body: Consumer<CommentsViewModel>(
           builder: (context, viewModel, child) {
+            final maskEmail = viewModel.maskEmail;
             if (viewModel.isLoading && viewModel.comments.isEmpty) {
               return const Center(child: CircularProgressIndicator());
             } else if (viewModel.errorMessage.isNotEmpty) {
@@ -62,7 +63,10 @@ class _CommentsPageState extends State<CommentsPage> {
                 itemBuilder: (context, index) {
                   if (index < viewModel.comments.length) {
                     final comment = viewModel.comments[index];
-                    return CommentWidget(comment: comment);
+                    return CommentWidget(
+                      comment: comment,
+                      maskEmail: maskEmail,
+                    );
                   } else {
                     return _buildLoadMoreIndicator(viewModel);
                   }

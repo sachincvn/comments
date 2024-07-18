@@ -1,6 +1,7 @@
 import 'package:comments/core/theme/app_theme.dart';
 import 'package:comments/core/utils/show_snackbar.dart';
 import 'package:comments/core/utils/validators.dart';
+import 'package:comments/features/authentication/presentation/pages/login_page.dart';
 import 'package:comments/features/authentication/presentation/provider/register_viewmodel.dart';
 import 'package:comments/features/authentication/presentation/widgets/auth_app_bar_widget.dart';
 import 'package:comments/features/authentication/presentation/widgets/auth_input_field.dart';
@@ -13,10 +14,10 @@ class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
   @override
-  State<RegisterPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<RegisterPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _nameController = TextEditingController();
@@ -50,80 +51,103 @@ class _LoginPageState extends State<RegisterPage> {
       child: Scaffold(
         appBar: authAppBar("Comments"),
         backgroundColor: AppTheme.lightColor,
-        body: Padding(
-          padding:
-              const EdgeInsets.only(bottom: 20, left: 14, right: 14, top: 80),
-          child: Consumer<RegisterViewModel>(
-            builder: (context, viewModel, child) {
-              return Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    AuthInputField(
-                      labelText: "Name",
-                      hintText: "Enter your name",
-                      controller: _nameController,
-                      validator: Validators.validateName,
+        body: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 14, vertical: 20),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 40),
+                        const Text(
+                          "Register",
+                          style: TextStyle(
+                              fontSize: 31, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 20),
+                        AuthInputField(
+                          labelText: "Name",
+                          hintText: "Enter your name",
+                          controller: _nameController,
+                          validator: Validators.validateName,
+                        ),
+                        const SizedBox(height: 10),
+                        AuthInputField(
+                          labelText: "Email",
+                          hintText: "Enter your email",
+                          controller: _emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          validator: Validators.validateEmail,
+                        ),
+                        const SizedBox(height: 10),
+                        AuthInputField(
+                          labelText: "Password",
+                          hintText: "Enter your password",
+                          controller: _passwordController,
+                          isObscureText: true,
+                          validator: Validators.validatePassword,
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 10),
-                    AuthInputField(
-                      labelText: "Email",
-                      hintText: "Enter your email",
-                      controller: _emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      validator: Validators.validateEmail,
-                    ),
-                    const SizedBox(height: 10),
-                    AuthInputField(
-                      labelText: "Password",
-                      hintText: "Enter your password",
-                      controller: _passwordController,
-                      isObscureText: true,
-                      validator: Validators.validatePassword,
-                    ),
-                    const Spacer(),
-                    ElevatedButton(
-                      onPressed:
-                          viewModel.isLoading ? null : () => _register(context),
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: AppTheme.primaryColor,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 60, vertical: 15)),
-                      child: viewModel.isLoading
-                          ? const CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                  AppTheme.lightColor),
-                            )
-                          : const Text(
-                              "Register",
-                              style: TextStyle(
-                                  fontSize: 16, color: AppTheme.lightColor),
-                            ),
-                    ),
-                    const SizedBox(height: 10),
-                    RichText(
-                      text: TextSpan(
-                        text: "Already have an account?",
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            fontWeight: FontWeight.w500,
-                            color: AppTheme.secondaryColor),
-                        children: [
-                          const TextSpan(text: " "),
-                          TextSpan(
-                              style:
-                                  const TextStyle(color: AppTheme.primaryColor),
-                              text: "Signin",
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () => Navigator.pushReplacementNamed(
-                                    context, '/login')),
-                        ],
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              );
-            },
-          ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 20),
+              child: Column(
+                children: [
+                  ElevatedButton(
+                    onPressed: context.watch<RegisterViewModel>().isLoading
+                        ? null
+                        : () => _register(context),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppTheme.primaryColor,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 60, vertical: 15),
+                    ),
+                    child: context.watch<RegisterViewModel>().isLoading
+                        ? const CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                AppTheme.lightColor),
+                          )
+                        : const Text(
+                            "Register",
+                            style: TextStyle(
+                                fontSize: 16, color: AppTheme.lightColor),
+                          ),
+                  ),
+                  const SizedBox(height: 10),
+                  RichText(
+                    text: TextSpan(
+                      text: "Already have an account?",
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeight.w500,
+                            color: AppTheme.secondaryColor,
+                          ),
+                      children: [
+                        const TextSpan(text: " "),
+                        TextSpan(
+                          style: const TextStyle(color: AppTheme.primaryColor),
+                          text: "Signin",
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => Navigator.pushReplacementNamed(
+                                  context,
+                                  LoginPage.routeName,
+                                ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

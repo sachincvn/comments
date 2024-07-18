@@ -2,13 +2,16 @@ import 'package:comments/core/usecases/usecase.dart';
 import 'package:comments/features/authentication/domain/usecase/logout_user_usecase.dart';
 import 'package:comments/features/comments/domain/entites/comment_entity.dart';
 import 'package:comments/features/comments/domain/usecase/get_comments_usecase.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 
 class CommentsViewModel extends ChangeNotifier {
   final GetCommentsUseCase getCommentsUseCase;
   final LogoutUserUseCase logoutUserUseCase;
+  final FirebaseRemoteConfig remoteConfig;
 
-  CommentsViewModel(this.logoutUserUseCase, {required this.getCommentsUseCase});
+  CommentsViewModel(
+      this.logoutUserUseCase, this.getCommentsUseCase, this.remoteConfig);
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -24,6 +27,8 @@ class CommentsViewModel extends ChangeNotifier {
 
   bool _hasMore = true;
   bool get hasMore => _hasMore;
+
+  bool get maskEmail => remoteConfig.getBool('mask_email');
 
   Future<void> fetchComments({bool refresh = false}) async {
     if (refresh) {

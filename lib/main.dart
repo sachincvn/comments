@@ -1,5 +1,5 @@
 import 'package:comments/core/theme/app_theme.dart';
-import 'package:comments/core/utils/firebase_options.dart';
+import 'package:comments/core/firebase/firebase_options.dart';
 import 'package:comments/features/authentication/presentation/pages/login_page.dart';
 import 'package:comments/features/authentication/presentation/pages/register_page.dart';
 import 'package:comments/features/authentication/presentation/provider/login_viewmodel.dart';
@@ -8,6 +8,7 @@ import 'package:comments/features/comments/presentation/pages/comments_page.dart
 import 'package:comments/features/comments/presentation/provider/comments_viewmodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:comments/core/di/injection_container.dart' as di;
 import 'package:provider/provider.dart';
@@ -18,6 +19,11 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await di.initDependencies();
+  final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
+  await remoteConfig.setDefaults({
+    'mask_email': false,
+  });
+  await remoteConfig.fetchAndActivate();
   runApp(const MyApp());
 }
 
