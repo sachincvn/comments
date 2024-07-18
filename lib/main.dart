@@ -1,6 +1,7 @@
 import 'package:comments/core/theme/app_theme.dart';
 import 'package:comments/core/utils/firebase_options.dart';
 import 'package:comments/features/authentication/presentation/pages/login_page.dart';
+import 'package:comments/features/authentication/presentation/pages/register_page.dart';
 import 'package:comments/features/authentication/presentation/provider/login_viewmodel.dart';
 import 'package:comments/features/authentication/presentation/provider/register_viewmodel.dart';
 import 'package:comments/features/comments/presentation/pages/comments_page.dart';
@@ -43,6 +44,11 @@ class MyApp extends StatelessWidget {
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
         themeMode: ThemeMode.system,
+        routes: {
+          LoginPage.routeName: (context) => const LoginPage(),
+          RegisterPage.routeName: (context) => const RegisterPage(),
+          CommentsPage.routeName: (context) => const CommentsPage(),
+        },
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {

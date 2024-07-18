@@ -1,4 +1,4 @@
-import 'package:comments/features/authentication/domain/entities/user.dart';
+import 'package:comments/features/authentication/domain/entities/user_entity.dart';
 
 class UserModel {
   final String uid;
@@ -23,11 +23,11 @@ class UserModel {
     );
   }
 
-  User toEntity() {
-    return User(uid: uid, name: name, email: email);
+  UserEntity toEntity() {
+    return UserEntity(uid: uid, name: name, email: email);
   }
 
-  factory UserModel.fromEntity(User user) {
+  factory UserModel.fromEntity(UserEntity user) {
     return UserModel(
       uid: user.uid,
       name: user.name,

@@ -12,6 +12,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final FirebaseAuth firebaseAuth;
   final FirebaseFirestore firestore;
 
+  Stream<User?> get authState => FirebaseAuth.instance.authStateChanges();
+
   AuthRemoteDataSourceImpl({
     required this.firebaseAuth,
     required this.firestore,

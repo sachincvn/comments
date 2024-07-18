@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class RegisterPage extends StatefulWidget {
+  static String routeName = '/register';
   const RegisterPage({super.key});
 
   @override
@@ -103,10 +104,9 @@ class _LoginPageState extends State<RegisterPage> {
                     RichText(
                       text: TextSpan(
                         text: "Already have an account?",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .copyWith(fontWeight: FontWeight.w500),
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeight.w500,
+                            color: AppTheme.secondaryColor),
                         children: [
                           const TextSpan(text: " "),
                           TextSpan(
@@ -114,9 +114,8 @@ class _LoginPageState extends State<RegisterPage> {
                                   const TextStyle(color: AppTheme.primaryColor),
                               text: "Signin",
                               recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.pop(context);
-                                }),
+                                ..onTap = () => Navigator.pushReplacementNamed(
+                                    context, '/login')),
                         ],
                       ),
                     ),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CommentsPage extends StatefulWidget {
+  static String routeName = '/comments';
   const CommentsPage({Key? key}) : super(key: key);
 
   @override
@@ -27,6 +28,7 @@ class _CommentsPageState extends State<CommentsPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: AppTheme.lightColor,
         appBar: AppBar(
           title: const Text(
             "Comments",

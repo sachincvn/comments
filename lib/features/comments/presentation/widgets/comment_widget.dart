@@ -15,7 +15,7 @@ class CommentWidget extends StatelessWidget {
         backgroundColor: AppTheme.grayColor,
         radius: 30,
         child: Text(
-          comment.id.toString(),
+          comment.name[0].toUpperCase(),
           style: Theme.of(context)
               .textTheme
               .bodyLarge!

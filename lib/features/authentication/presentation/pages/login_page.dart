@@ -1,7 +1,6 @@
 import 'package:comments/core/theme/app_theme.dart';
 import 'package:comments/core/utils/show_snackbar.dart';
 import 'package:comments/core/utils/validators.dart';
-import 'package:comments/features/authentication/presentation/pages/register_page.dart';
 import 'package:comments/features/authentication/presentation/provider/login_viewmodel.dart';
 import 'package:comments/features/authentication/presentation/widgets/auth_app_bar_widget.dart';
 import 'package:comments/features/authentication/presentation/widgets/auth_input_field.dart';
@@ -10,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
+  static String routeName = '/login';
   const LoginPage({super.key});
 
   @override
@@ -82,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                                   AppTheme.lightColor),
                             )
                           : const Text(
-                              "Register",
+                              "Sigin",
                               style: TextStyle(
                                   fontSize: 16, color: AppTheme.lightColor),
                             ),
@@ -91,10 +91,9 @@ class _LoginPageState extends State<LoginPage> {
                     RichText(
                       text: TextSpan(
                         text: "New Here?",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .copyWith(fontWeight: FontWeight.w500),
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeight.w500,
+                            color: AppTheme.secondaryColor),
                         children: [
                           const TextSpan(text: " "),
                           TextSpan(
@@ -102,14 +101,8 @@ class _LoginPageState extends State<LoginPage> {
                                   const TextStyle(color: AppTheme.primaryColor),
                               text: "Signup",
                               recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const RegisterPage(),
-                                      ));
-                                }),
+                                ..onTap = () => Navigator.pushReplacementNamed(
+                                    context, '/register')),
                         ],
                       ),
                     ),

@@ -1,6 +1,6 @@
 import 'package:comments/core/errors/failure.dart';
 import 'package:comments/features/authentication/data/data_source/auth_remote_data_source.dart';
-import 'package:comments/features/authentication/domain/entities/user.dart';
+import 'package:comments/features/authentication/domain/entities/user_entity.dart';
 import 'package:comments/features/authentication/domain/repository/auth_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
@@ -10,7 +10,7 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<Either<Failure, User>> registerUser(
+  Future<Either<Failure, UserEntity>> registerUser(
       String name, String email, String password) async {
     try {
       final userModel =
@@ -22,7 +22,8 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, User>> loginUser(String email, String password) async {
+  Future<Either<Failure, UserEntity>> loginUser(
+      String email, String password) async {
     try {
       final userModel = await remoteDataSource.loginUser(email, password);
       return Right(userModel.toEntity());
